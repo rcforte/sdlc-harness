@@ -27,11 +27,12 @@ if "%DO_UPDATE%"=="1" (
   git -C "%REPO%" pull --ff-only
 )
 
-REM --- grep gate: never ship personal / dogfood-specific refs ---
-findstr /s /m /c:"com.rcforte" /c:"pmt-analytics" "%REPO%\skills\*" "%REPO%\agents\*" >nul 2>&1
+REM --- grep gate: never ship personal / dogfood-specific refs (exclude PACKAGING.md, which
+REM     legitimately names them while describing this very gate) ---
+findstr /s /c:"com.rcforte" /c:"pmt-analytics" "%REPO%\skills\*" "%REPO%\agents\*" 2>nul | findstr /v /c:"PACKAGING.md" >nul
 if not errorlevel 1 (
   echo ABORT: personal/dogfood references found in shipped files:
-  findstr /s /c:"com.rcforte" /c:"pmt-analytics" "%REPO%\skills\*" "%REPO%\agents\*"
+  findstr /s /c:"com.rcforte" /c:"pmt-analytics" "%REPO%\skills\*" "%REPO%\agents\*" | findstr /v /c:"PACKAGING.md"
   exit /b 1
 )
 

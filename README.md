@@ -36,6 +36,8 @@ cd sdlc-harness
 # ./install.sh --update        # git pull + re-install + re-check
 ```
 
+**Windows:** use `install.bat` instead (same flags: `--copy` / `--project DIR` / `--update`). It junctions the skill dirs (no admin) and copies the agent files.
+
 `install.sh` runs a **prerequisite check** (git · Matt skills · a note on the Workflow tool) and a
 **grep gate** that refuses to ship personal/dogfood references.
 

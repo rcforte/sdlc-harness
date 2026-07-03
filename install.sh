@@ -36,7 +36,7 @@ fi
 mkdir -p "$TARGET/skills" "$TARGET/agents"
 link_or_copy(){ local src="$1" dst="$2"; rm -rf "$dst"; if [[ "$MODE" == symlink ]]; then ln -s "$src" "$dst"; else cp -r "$src" "$dst"; fi; }
 
-for d in "$REPO"/skills/*/; do n="$(basename "$d")"; link_or_copy "$d%/" "$TARGET/skills/$n"; done
+for d in "$REPO"/skills/*/; do n="$(basename "$d")"; link_or_copy "${d%/}" "$TARGET/skills/$n"; done
 for f in "$REPO"/agents/*.md; do n="$(basename "$f")"; link_or_copy "$f" "$TARGET/agents/$n"; done
 say "installed $(ls "$REPO/skills" | wc -l | tr -d ' ') skills + $(ls "$REPO/agents" | wc -l | tr -d ' ') agents into $TARGET ($MODE)"
 
